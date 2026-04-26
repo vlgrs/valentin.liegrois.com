@@ -176,7 +176,7 @@ export function Hero({
   }, [scrubRange, scrubSeconds]);
 
   return (
-    <section ref={pinRef} className="relative z-10 h-svh w-full overflow-hidden bg-black">
+    <section ref={pinRef} className="relative z-10 h-lvh w-full overflow-hidden bg-black">
       <video
         ref={videoRef}
         src={videoSrc}

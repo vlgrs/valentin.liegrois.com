@@ -11,11 +11,12 @@ export default function Home() {
   return (
     <main className="flex flex-1 flex-col bg-black text-white">
       <Hero />
-      {/* Pulled up 100vh so the post-hero sections sit BEHIND the pinned hero
-          (z-0) inside the GSAP spacer. As the hero fades to opacity 0 at the
-          end of its scrub, Identity is revealed underneath — automatic
-          cross-fade, no empty black space when the pin releases. */}
-      <div className="relative z-0 -mt-[100svh]">
+      {/* Pulled up by the same height as the hero pin (lvh = largest viewport)
+          so the post-hero sections sit BEHIND the pinned hero (z-0) inside
+          the GSAP spacer. As the hero slides up at the end of its scrub,
+          Identity is revealed underneath. Using lvh (not svh) ensures no
+          gap appears when iOS Chrome retracts its address bar mid-scroll. */}
+      <div className="relative z-0 -mt-[100lvh]">
         <Identity />
         <TrustedBy />
         <Capabilities />
