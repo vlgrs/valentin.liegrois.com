@@ -5,7 +5,7 @@ type Props = {
 
 /**
  * VL monogram. Uses currentColor for the fill so the surrounding text-color
- * utility controls black vs white (or any tint).
+ * utility controls black vs white.
  */
 export function Logo({ className, ariaLabel = "Valentin Liegrois" }: Props) {
   return (
@@ -17,9 +17,8 @@ export function Logo({ className, ariaLabel = "Valentin Liegrois" }: Props) {
       aria-label={ariaLabel}
       className={className}
     >
-      <path d="M8 14 L16 14 L26 50 L18 50 Z" />
-      <path d="M36 14 L44 14 L34 50 L26 50 Z" />
-      <path d="M48 14 L56 14 L56 42 L62 42 L62 50 L48 50 Z" />
+      <path d="M4 14 L13 14 L17 38 L21 14 L30 14 L21 52 L13 52 Z" />
+      <path d="M34 14 L43 14 L43 44 L60 44 L60 52 L34 52 Z" />
     </svg>
   );
 }
