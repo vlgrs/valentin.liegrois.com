@@ -81,43 +81,48 @@ export function Hero({
       }
 
       // Beats slide in/out HORIZONTALLY from the left edge — anchored on the
-      // side of the frame so the face is never occluded. Timeline is tightly
-      // packed so the text flows continuously through the whole video duration
-      // with no gaps and no end pause.
+      // side of the frame so the face is never occluded. Each beat has its own
+      // enter/hold/exit arc and they chain continuously across 0..1, with a
+      // clean fade-out at the very end so there's no static "dead" hold.
       if (beat1) {
         tl.fromTo(
           beat1,
           { opacity: 1, x: 0 },
           { opacity: 0, x: -32, duration: 0.10 },
-          0.15
+          0.10
         );
       }
 
-      // Beat 2: 3 lines slide in one after the other (~5% gap), hold, exit.
+      // Beat 2: 3 lines slide in one after the other, hold, exit together.
       if (beat2Lines.length === 3) {
         beat2Lines.forEach((line, i) => {
           tl.fromTo(
             line,
             { opacity: 0, x: -40 },
-            { opacity: 1, x: 0, duration: 0.07, ease: "power2.out" },
-            0.22 + i * 0.05
+            { opacity: 1, x: 0, duration: 0.06, ease: "power2.out" },
+            0.20 + i * 0.05
           );
         });
         tl.to(
           beat2Lines,
           { opacity: 0, x: -32, duration: 0.10, stagger: 0.015 },
-          0.50
+          0.48
         );
       }
 
-      // Beat 3: enters right after beat 2 exits, holds through the rest of
-      // the scrub so the final "available" message lands on the resolved face.
+      // Beat 3: enters cleanly after beat 2, holds through the cyber-resolve,
+      // then fades out before the very end so the last frame is text-free —
+      // no static hold = no end-of-scroll pause.
       if (beat3) {
         tl.fromTo(
           beat3,
           { opacity: 0, x: -32 },
           { opacity: 1, x: 0, duration: 0.10 },
           0.62
+        ).to(
+          beat3,
+          { opacity: 0, x: -32, duration: 0.12, ease: "power1.in" },
+          0.88
         );
       }
 

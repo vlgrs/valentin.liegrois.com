@@ -18,31 +18,26 @@ await page.waitForFunction(() => {
 
 await page.waitForTimeout(800);
 
-// Beat 2 progression — sample at 30%, 35%, 40%, 50% to see staggered lines
-const beat2 = [
-  { name: "beat2-30", scroll: 0.30 },
-  { name: "beat2-35", scroll: 0.35 },
-  { name: "beat2-40", scroll: 0.40 },
-  { name: "beat2-50", scroll: 0.50 },
-];
-
-// Transition bridge progression — past hero pin, into identity
-const bridge = [
-  { name: "bridge-pre", scroll: 0.95 },     // last bit of hero scrub
-  { name: "bridge-release", scroll: 1.05 }, // pin just released
-  { name: "bridge-cyan", scroll: 1.20 },    // cyan bloom should peak
-  { name: "bridge-mix", scroll: 1.40 },     // crossfade cyan→amber
-  { name: "bridge-amber", scroll: 1.55 },   // amber peak
-  { name: "bridge-out", scroll: 1.75 },     // amber fades, identity visible
+// Sample beat 3 entry, hold, fade-out, and clean end.
+const samples = [
+  { name: "00-start", scroll: 0.00 },
+  { name: "01-b1-fading", scroll: 0.15 },
+  { name: "02-b2-rising", scroll: 0.28 },
+  { name: "03-b2-full", scroll: 0.42 },
+  { name: "04-b2-exit", scroll: 0.55 },
+  { name: "05-b3-enter", scroll: 0.66 },
+  { name: "06-b3-hold", scroll: 0.80 },
+  { name: "07-b3-fading", scroll: 0.93 },
+  { name: "08-clean-end", scroll: 0.99 },
 ];
 
 const vh = 800;
 const heroRange = vh * 2;
 
-for (const s of [...beat2, ...bridge]) {
+for (const s of samples) {
   await page.evaluate((y) => window.scrollTo(0, y), s.scroll * heroRange);
-  await page.waitForTimeout(450);
-  await page.screenshot({ path: `/tmp/${s.name}.png` });
+  await page.waitForTimeout(700);
+  await page.screenshot({ path: `/tmp/timeline-${s.name}.png` });
 }
 
 await browser.close();
