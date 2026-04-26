@@ -1,0 +1,24 @@
+{
+  "rules": [
+    {
+      "allowed": {
+        "origins": [
+          "https://valentin-liegrois-com.pages.dev",
+          "https://valentin.liegrois.com",
+          "http://localhost:3000",
+          "http://localhost:4000"
+        ],
+        "methods": ["GET", "HEAD"],
+        "headers": ["*"]
+      },
+      "exposeHeaders": [
+        "Content-Length",
+        "Content-Range",
+        "Content-Type",
+        "Accept-Ranges",
+        "ETag"
+      ],
+      "maxAgeSeconds": 3600
+    }
+  ]
+}

@@ -175,6 +175,7 @@ export function Hero({
         playsInline
         preload="auto"
         autoPlay={false}
+        crossOrigin="anonymous"
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div ref={particlesRef} className="absolute inset-0">
