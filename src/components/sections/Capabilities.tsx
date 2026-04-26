@@ -23,11 +23,11 @@ export function Capabilities() {
       />
 
       <div className="mx-auto w-full max-w-6xl px-6">
-        <header className="reveal mx-auto max-w-2xl text-center">
+        <header className="reveal mx-auto max-w-2xl px-4 text-center">
           <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-white/45">
             {t.capabilities.heading}
           </p>
-          <h2 className="mt-4 text-3xl font-light tracking-tight text-white sm:text-4xl">
+          <h2 className="mt-4 text-2xl font-light tracking-tight text-white sm:text-4xl">
             {t.capabilities.sub}
           </h2>
         </header>

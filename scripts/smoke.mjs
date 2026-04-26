@@ -1,9 +1,9 @@
-import { chromium } from "playwright";
+import { chromium, devices } from "playwright";
 
 const url = process.env.URL ?? "http://localhost:3000/";
 
 const browser = await chromium.launch();
-const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+const ctx = await browser.newContext(devices["iPhone 13"]);
 const page = await ctx.newPage();
 const errors = [];
 page.on("pageerror", (err) => errors.push(`pageerror: ${err.message}`));
@@ -16,29 +16,27 @@ await page.waitForFunction(() => {
   return v && Number.isFinite(v.duration) && v.duration > 0;
 }, { timeout: 10000 }).catch(() => {});
 
-await page.waitForTimeout(800);
+await page.waitForTimeout(1200);
 
-// Sample beat 3 entry, hold, fade-out, and clean end.
 const samples = [
-  { name: "00-start", scroll: 0.00 },
-  { name: "01-b1-fading", scroll: 0.15 },
-  { name: "02-b2-rising", scroll: 0.28 },
-  { name: "03-b2-full", scroll: 0.42 },
-  { name: "04-b2-exit", scroll: 0.55 },
-  { name: "05-b3-enter", scroll: 0.66 },
-  { name: "06-b3-hold", scroll: 0.80 },
-  { name: "07-b3-fading", scroll: 0.93 },
-  { name: "08-clean-end", scroll: 0.99 },
+  { name: "01-hero-start", scroll: 0.00 },
+  { name: "02-beat2", scroll: 0.18 },
+  { name: "03-beat3", scroll: 0.78 },
+  { name: "04-mid-page", scroll: 0.40 },
+  { name: "05-identity", scroll: 0.50 },
+  { name: "06-trustedby", scroll: 0.55 },
+  { name: "07-capabilities", scroll: 0.65 },
+  { name: "08-work", scroll: 0.85 },
+  { name: "09-contact", scroll: 1.00 },
 ];
 
-const vh = 800;
-const heroRange = vh * 2;
+const total = await page.evaluate(() => document.documentElement.scrollHeight - window.innerHeight);
 
 for (const s of samples) {
-  await page.evaluate((y) => window.scrollTo(0, y), s.scroll * heroRange);
+  await page.evaluate((y) => window.scrollTo(0, y), s.scroll * total);
   await page.waitForTimeout(700);
-  await page.screenshot({ path: `/tmp/timeline-${s.name}.png` });
+  await page.screenshot({ path: `/tmp/mobile-${s.name}.png` });
 }
 
 await browser.close();
-console.log(JSON.stringify({ errors }, null, 2));
+console.log(JSON.stringify({ errors, viewport: ctx._options?.viewport }, null, 2));

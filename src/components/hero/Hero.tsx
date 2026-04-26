@@ -172,33 +172,38 @@ export function Hero({
         <FloatingParticles count={120} />
       </div>
 
-      {/* Left-edge legibility wash — keeps the off-face text readable without
-          touching the right-side composition where the face lives. */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-2/3 bg-gradient-to-r from-black/65 via-black/25 to-transparent" />
+      {/* Mobile legibility wash — strong fade-to-black at the bottom 60% so
+          the beats stay readable against the face which fills the portrait
+          viewport. Hidden on sm+ where the left-side wash takes over. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-black/85 via-black/40 to-transparent sm:hidden" />
+
+      {/* Desktop legibility wash — left-side gradient only, doesn't touch the
+          face area on the right of the frame. */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-2/3 bg-gradient-to-r from-black/65 via-black/25 to-transparent sm:block" />
 
       <div
         ref={beat1Ref}
-        className="pointer-events-none absolute inset-y-0 left-0 flex max-w-[42vw] flex-col justify-end pb-16 pl-8 sm:max-w-[40vw] sm:pb-24 sm:pl-14"
+        className="pointer-events-none absolute inset-x-0 bottom-12 flex flex-col items-center px-6 text-center sm:inset-y-0 sm:bottom-auto sm:left-0 sm:right-auto sm:max-w-[40vw] sm:items-start sm:justify-end sm:pb-24 sm:pl-14 sm:pr-0 sm:text-left"
       >
         <h1
-          className="font-hero text-5xl uppercase leading-[0.95] tracking-[0.04em] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] sm:text-7xl"
+          className="font-hero text-4xl uppercase leading-[0.95] tracking-[0.04em] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] sm:text-7xl"
           style={{ fontFamily: "var(--font-hero)" }}
         >
           {t.hero.beat1.name}
         </h1>
-        <p className="mt-5 max-w-[34ch] text-sm font-light tracking-wide text-white/80 sm:text-base">
+        <p className="mt-4 max-w-[34ch] text-sm font-light tracking-wide text-white/80 sm:mt-5 sm:text-base">
           {t.hero.beat1.sub}
         </p>
       </div>
 
-      <div className="pointer-events-none absolute inset-y-0 left-0 flex max-w-[42vw] flex-col justify-end gap-1 pb-16 pl-8 sm:max-w-[40vw] sm:gap-2 sm:pb-24 sm:pl-14">
+      <div className="pointer-events-none absolute inset-x-0 bottom-12 flex flex-col items-center gap-1 px-6 text-center sm:inset-y-0 sm:bottom-auto sm:left-0 sm:right-auto sm:max-w-[40vw] sm:items-start sm:justify-end sm:gap-2 sm:pb-24 sm:pl-14 sm:pr-0 sm:text-left">
         {t.hero.beat2.map((line, i) => (
           <p
             key={i}
             ref={(el) => {
               if (el) beat2LinesRef.current[i] = el;
             }}
-            className="font-hero text-2xl uppercase leading-tight tracking-[0.04em] text-white opacity-0 drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] sm:text-4xl"
+            className="font-hero text-xl uppercase leading-tight tracking-[0.04em] text-white opacity-0 drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] sm:text-4xl"
             style={{ fontFamily: "var(--font-hero)" }}
           >
             {line}
@@ -208,10 +213,10 @@ export function Hero({
 
       <div
         ref={beat3Ref}
-        className="pointer-events-none absolute inset-y-0 left-0 flex max-w-[42vw] flex-col justify-end pb-16 pl-8 opacity-0 sm:max-w-[40vw] sm:pb-24 sm:pl-14"
+        className="pointer-events-none absolute inset-x-0 bottom-12 flex flex-col items-center px-6 text-center opacity-0 sm:inset-y-0 sm:bottom-auto sm:left-0 sm:right-auto sm:max-w-[40vw] sm:items-start sm:justify-end sm:pb-24 sm:pl-14 sm:pr-0 sm:text-left"
       >
         <p
-          className="font-hero text-2xl uppercase leading-tight tracking-[0.04em] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] sm:text-4xl"
+          className="font-hero text-xl uppercase leading-tight tracking-[0.04em] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] sm:text-4xl"
           style={{ fontFamily: "var(--font-hero)" }}
         >
           {t.hero.beat3}
