@@ -11,12 +11,18 @@ export default function Home() {
   return (
     <main className="flex flex-1 flex-col bg-black text-white">
       <Hero />
-      <Identity />
-      <TrustedBy />
-      <Capabilities />
-      <SelectedWork />
-      <Contact />
-      <Footer />
+      {/* Pulled up 100vh so the post-hero sections sit BEHIND the pinned hero
+          (z-0) inside the GSAP spacer. As the hero fades to opacity 0 at the
+          end of its scrub, Identity is revealed underneath — automatic
+          cross-fade, no empty black space when the pin releases. */}
+      <div className="relative z-0 -mt-[100svh]">
+        <Identity />
+        <TrustedBy />
+        <Capabilities />
+        <SelectedWork />
+        <Contact />
+        <Footer />
+      </div>
       <RevealOnScroll />
     </main>
   );
