@@ -59,6 +59,16 @@ export function Hero({
     const setup = () => {
       if (!Number.isFinite(video.duration) || video.duration <= 0) return;
 
+      // iOS Safari unloads <video> elements that are loaded but never "played",
+      // which makes the frame disappear shortly after page load. A muted
+      // play()+pause() cycle commits the resource so the element stays alive.
+      video
+        .play()
+        .then(() => video.pause())
+        .catch(() => {
+          /* ignore — autoplay blocked, but the video is still seekable */
+        });
+
       const tl = gsap.timeline({
         defaults: { ease: "power2.out" },
         scrollTrigger: {
