@@ -191,7 +191,7 @@ export function Hero({
         >
           {t.hero.beat1.name}
         </h1>
-        <p className="mt-4 max-w-[34ch] text-sm font-light tracking-wide text-white/80 sm:mt-5 sm:text-base">
+        <p className="mt-4 max-w-[34ch] text-base font-normal tracking-wide text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.7)] sm:mt-6 sm:text-xl">
           {t.hero.beat1.sub}
         </p>
       </div>
