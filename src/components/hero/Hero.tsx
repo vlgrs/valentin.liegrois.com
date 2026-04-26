@@ -203,7 +203,7 @@ export function Hero({
 
       <div
         ref={beat1Ref}
-        className="pointer-events-none absolute inset-x-0 bottom-12 flex flex-col items-center px-6 text-center sm:inset-y-0 sm:bottom-auto sm:left-0 sm:right-auto sm:max-w-[40vw] sm:items-start sm:justify-end sm:pb-24 sm:pl-14 sm:pr-0 sm:text-left"
+        className="pointer-events-none absolute inset-x-0 bottom-32 flex flex-col items-center px-6 text-center sm:inset-y-0 sm:bottom-auto sm:left-0 sm:right-auto sm:max-w-[40vw] sm:items-start sm:justify-end sm:pb-24 sm:pl-14 sm:pr-0 sm:text-left"
       >
         <h1
           className="font-hero text-4xl uppercase leading-[0.95] tracking-[0.04em] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] sm:text-7xl"
@@ -216,7 +216,7 @@ export function Hero({
         </p>
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-12 flex flex-col items-center gap-1 px-6 text-center sm:inset-y-0 sm:bottom-auto sm:left-0 sm:right-auto sm:max-w-[40vw] sm:items-start sm:justify-end sm:gap-2 sm:pb-24 sm:pl-14 sm:pr-0 sm:text-left">
+      <div className="pointer-events-none absolute inset-x-0 bottom-32 flex flex-col items-center gap-1 px-6 text-center sm:inset-y-0 sm:bottom-auto sm:left-0 sm:right-auto sm:max-w-[40vw] sm:items-start sm:justify-end sm:gap-2 sm:pb-24 sm:pl-14 sm:pr-0 sm:text-left">
         {t.hero.beat2.map((line, i) => (
           <p
             key={i}
@@ -233,7 +233,7 @@ export function Hero({
 
       <div
         ref={beat3Ref}
-        className="pointer-events-none absolute inset-x-0 bottom-12 flex flex-col items-center px-6 text-center opacity-0 sm:inset-y-0 sm:bottom-auto sm:left-0 sm:right-auto sm:max-w-[40vw] sm:items-start sm:justify-end sm:pb-24 sm:pl-14 sm:pr-0 sm:text-left"
+        className="pointer-events-none absolute inset-x-0 bottom-32 flex flex-col items-center px-6 text-center opacity-0 sm:inset-y-0 sm:bottom-auto sm:left-0 sm:right-auto sm:max-w-[40vw] sm:items-start sm:justify-end sm:pb-24 sm:pl-14 sm:pr-0 sm:text-left"
       >
         <p
           className="font-hero text-xl uppercase leading-tight tracking-[0.04em] text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)] sm:text-4xl"

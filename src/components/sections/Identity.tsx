@@ -18,7 +18,7 @@ export function Identity() {
         }}
       />
 
-      <div className="reveal mx-auto flex w-full max-w-3xl flex-col items-center px-6 py-32 text-center sm:py-40">
+      <div className="reveal mx-auto flex min-h-lvh w-full max-w-3xl flex-col items-center justify-center px-6 py-24 text-center sm:py-32">
         <p className="font-mono text-[11px] uppercase tracking-[0.32em] text-white/45">
           {t.identity.role}
         </p>

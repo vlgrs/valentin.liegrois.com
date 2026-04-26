@@ -4,6 +4,7 @@ import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { I18nProvider } from "@/i18n/I18nProvider";
 import { LanguageToggle } from "@/components/LanguageToggle";
+import { HeroLogo } from "@/components/HeroLogo";
 
 const display = Space_Grotesk({
   variable: "--font-display",
@@ -36,6 +37,7 @@ export default function RootLayout({
         <I18nProvider>
           <SmoothScroll>
             <LanguageToggle />
+            <HeroLogo />
             {children}
           </SmoothScroll>
         </I18nProvider>

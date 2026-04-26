@@ -6,36 +6,35 @@ const browser = await webkit.launch();
 const ctx = await browser.newContext(devices["iPhone 13"]);
 const page = await ctx.newPage();
 const errors = [];
-const requestFails = [];
 page.on("pageerror", (err) => errors.push(`pageerror: ${err.message}`));
 page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
-page.on("requestfailed", (r) =>
-  requestFails.push(`${r.url()}: ${r.failure()?.errorText}`)
-);
 
 await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
-await page.waitForTimeout(4500);
+await page.waitForTimeout(3500);
 
-const info = await page.evaluate(() => {
+const samples = [
+  { name: "01-start", scroll: 0 },
+  { name: "02-mid", scroll: 600 },
+  { name: "03-late", scroll: 1100 },
+  { name: "04-end", scroll: 1400 },
+];
+
+for (const s of samples) {
+  await page.evaluate((y) => window.scrollTo(0, y), s.scroll);
+  await page.waitForTimeout(700);
+  await page.screenshot({ path: `/tmp/wk-${s.name}.png` });
+}
+
+const final = await page.evaluate(() => {
   const v = document.querySelector("video");
+  const hero = document.querySelector("section.h-lvh");
   return {
-    hasVideo: !!v,
-    videoSrc: v?.src,
-    videoCurrentSrc: v?.currentSrc,
+    videoCurrentTime: v?.currentTime,
     videoDuration: v?.duration,
-    videoReadyState: v?.readyState,
-    videoNetworkState: v?.networkState,
-    videoError: v?.error
-      ? { code: v.error.code, message: v.error.message }
-      : null,
-    videoPaused: v?.paused,
-    videoBoundingBox: v?.getBoundingClientRect(),
-    videoComputedDisplay: v ? getComputedStyle(v).display : null,
-    poster: v?.poster,
+    heroHeight: hero?.getBoundingClientRect()?.height,
+    viewportHeight: window.innerHeight,
   };
 });
 
-await page.screenshot({ path: "/tmp/live-webkit.png" });
-
 await browser.close();
-console.log(JSON.stringify({ info, errors, requestFails }, null, 2));
+console.log(JSON.stringify({ final, errors }, null, 2));
