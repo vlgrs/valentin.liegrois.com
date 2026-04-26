@@ -64,10 +64,13 @@ export function Hero({
         },
       });
 
+      // Video scrub fills 85% of the timeline. The last 15% is reserved for
+      // the slide-up exit so beat 3 can land exactly on the final frame and
+      // the transition chains directly with no static hold.
       tl.fromTo(
         video,
         { currentTime: 0 },
-        { currentTime: video.duration, ease: "none" },
+        { currentTime: video.duration, ease: "none", duration: 0.85 },
         0
       );
 
@@ -80,19 +83,19 @@ export function Hero({
         );
       }
 
-      // Beats chain continuously across the timeline with no gaps. The whole
-      // hero pin element fades to opacity 0 in the final 12% so the section
-      // boundary is a smooth dissolve rather than an abrupt pin release.
+      // Beats chain continuously across the whole video duration (timeline
+      // 0 → 0.85, since the last 15% is the slide-up exit). Beat 3 lands
+      // EXACTLY on the video's final frame at 0.85, then the slide chains
+      // directly — no static "dead hold" between the last text and the exit.
       //
       // Schedule (timeline progress 0..1):
       //   0.00 - 0.05   beat 1 visible
       //   0.05 - 0.10   beat 1 fades out
       //   0.12 - 0.25   beat 2 lines stagger in (3 lines, 4% apart)
-      //   0.25 - 0.42   beat 2 holds
-      //   0.42 - 0.50   beat 2 fades out (stagger)
-      //   0.48 - 0.56   beat 3 enters (2% overlap with beat 2 exit = cross-fade)
-      //   0.56 - 0.88   beat 3 visible
-      //   0.88 - 1.00   the entire hero fades out (smooth exit transition)
+      //   0.25 - 0.62   beat 2 holds (cyber wireframe phase)
+      //   0.62 - 0.72   beat 2 fades out (stagger)
+      //   0.74 - 0.85   beat 3 enters and lands on the resolved final frame
+      //   0.85 - 1.00   the hero slides up off-screen, beat 3 rides with it
       if (beat1) {
         tl.fromTo(
           beat1,
@@ -113,8 +116,8 @@ export function Hero({
         });
         tl.to(
           beat2Lines,
-          { opacity: 0, x: -32, duration: 0.08, stagger: 0.015 },
-          0.42
+          { opacity: 0, x: -32, duration: 0.10, stagger: 0.015 },
+          0.62
         );
       }
 
@@ -122,8 +125,8 @@ export function Hero({
         tl.fromTo(
           beat3,
           { opacity: 0, x: -32 },
-          { opacity: 1, x: 0, duration: 0.08 },
-          0.48
+          { opacity: 1, x: 0, duration: 0.11, ease: "power2.out" },
+          0.74
         );
       }
 
