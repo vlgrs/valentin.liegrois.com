@@ -80,51 +80,62 @@ export function Hero({
         );
       }
 
-      // Beats slide in/out HORIZONTALLY from the left edge — anchored on the
-      // side of the frame so the face is never occluded. Each beat has its own
-      // enter/hold/exit arc and they chain continuously across 0..1, with a
-      // clean fade-out at the very end so there's no static "dead" hold.
+      // Beats chain continuously across the timeline with no gaps. The whole
+      // hero pin element fades to opacity 0 in the final 12% so the section
+      // boundary is a smooth dissolve rather than an abrupt pin release.
+      //
+      // Schedule (timeline progress 0..1):
+      //   0.00 - 0.05   beat 1 visible
+      //   0.05 - 0.10   beat 1 fades out
+      //   0.12 - 0.25   beat 2 lines stagger in (3 lines, 4% apart)
+      //   0.25 - 0.42   beat 2 holds
+      //   0.42 - 0.50   beat 2 fades out (stagger)
+      //   0.48 - 0.56   beat 3 enters (2% overlap with beat 2 exit = cross-fade)
+      //   0.56 - 0.88   beat 3 visible
+      //   0.88 - 1.00   the entire hero fades out (smooth exit transition)
       if (beat1) {
         tl.fromTo(
           beat1,
           { opacity: 1, x: 0 },
-          { opacity: 0, x: -32, duration: 0.10 },
-          0.10
+          { opacity: 0, x: -32, duration: 0.05 },
+          0.05
         );
       }
 
-      // Beat 2: 3 lines slide in one after the other, hold, exit together.
       if (beat2Lines.length === 3) {
         beat2Lines.forEach((line, i) => {
           tl.fromTo(
             line,
             { opacity: 0, x: -40 },
-            { opacity: 1, x: 0, duration: 0.06, ease: "power2.out" },
-            0.20 + i * 0.05
+            { opacity: 1, x: 0, duration: 0.05, ease: "power2.out" },
+            0.12 + i * 0.04
           );
         });
         tl.to(
           beat2Lines,
-          { opacity: 0, x: -32, duration: 0.10, stagger: 0.015 },
-          0.48
+          { opacity: 0, x: -32, duration: 0.08, stagger: 0.015 },
+          0.42
         );
       }
 
-      // Beat 3: enters cleanly after beat 2, holds through the cyber-resolve,
-      // then fades out before the very end so the last frame is text-free —
-      // no static hold = no end-of-scroll pause.
       if (beat3) {
         tl.fromTo(
           beat3,
           { opacity: 0, x: -32 },
-          { opacity: 1, x: 0, duration: 0.10 },
-          0.62
-        ).to(
-          beat3,
-          { opacity: 0, x: -32, duration: 0.12, ease: "power1.in" },
-          0.88
+          { opacity: 1, x: 0, duration: 0.08 },
+          0.48
         );
       }
+
+      // Whole-hero exit: the pin element (video + particles + beats + bg) fades
+      // to nothing in the final 12%. Pin releases at 1.0 on an invisible hero,
+      // so the user never sees the abrupt unpinning — Identity below is already
+      // ready and fades up via its own reveal-on-scroll.
+      tl.to(
+        pin,
+        { opacity: 0, duration: 0.12, ease: "power2.in" },
+        0.88
+      );
 
       if (tl.scrollTrigger) triggers.push(tl.scrollTrigger);
     };
