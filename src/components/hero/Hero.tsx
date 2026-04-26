@@ -21,8 +21,17 @@ type Props = {
   scrubSeconds?: number;
 };
 
+// In production the video lives on R2 (not on Pages) because Cloudflare Pages
+// serves static assets without HTTP Range support, which silently breaks
+// scrub-driven seeking on <video>. R2 supports Range requests natively.
+// In dev we keep the local path so `pnpm dev` works offline.
+const DEFAULT_VIDEO_SRC =
+  process.env.NODE_ENV === "production"
+    ? "https://pub-7edc43296174458282ca27fc89f903b6.r2.dev/valentin_motion_scrub.mp4"
+    : "/valentin_motion_scrub.mp4";
+
 export function Hero({
-  videoSrc = "/valentin_motion_scrub.mp4",
+  videoSrc = DEFAULT_VIDEO_SRC,
   posterSrc = "/valentin_poster.jpg",
   scrubRange = "+=200%",
   scrubSeconds = 0.8,
