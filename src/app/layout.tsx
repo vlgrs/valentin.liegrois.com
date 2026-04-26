@@ -3,7 +3,6 @@ import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { I18nProvider } from "@/i18n/I18nProvider";
-import { LanguageToggle } from "@/components/LanguageToggle";
 import { HeroLogo } from "@/components/HeroLogo";
 
 const display = Space_Grotesk({
@@ -36,7 +35,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <I18nProvider>
           <SmoothScroll>
-            <LanguageToggle />
             <HeroLogo />
             {children}
           </SmoothScroll>
