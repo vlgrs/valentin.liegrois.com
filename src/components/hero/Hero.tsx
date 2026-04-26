@@ -127,14 +127,15 @@ export function Hero({
         );
       }
 
-      // Whole-hero exit: the pin element (video + particles + beats + bg) fades
-      // to nothing in the final 12%. Pin releases at 1.0 on an invisible hero,
-      // so the user never sees the abrupt unpinning — Identity below is already
-      // ready and fades up via its own reveal-on-scroll.
+      // Whole-hero exit: the pin element slides UP (translateY -100%) in the
+      // final 15% of scrub. The hero physically lifts off the viewport like a
+      // raising curtain, revealing Identity (sitting behind via z-index) from
+      // the bottom up. Cleaner than a cross-fade — no overlap, just a single
+      // crisp upward motion.
       tl.to(
         pin,
-        { opacity: 0, duration: 0.12, ease: "power2.in" },
-        0.88
+        { yPercent: -100, duration: 0.15, ease: "power2.in" },
+        0.85
       );
 
       if (tl.scrollTrigger) triggers.push(tl.scrollTrigger);
